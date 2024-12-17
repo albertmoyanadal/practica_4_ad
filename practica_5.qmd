@@ -1,0 +1,16 @@
+---
+title: "Exercicis per exposar"
+subtitle: "20582- Anàlisi de Dades del GMAT"
+date: today
+format:
+  html:
+    theme: lumen # mirar altres temes poden ser xulos
+    toc: true  # table of context
+    toc-depth: 3
+Rendering:
+    embed-resources: true # Així guardam al document de sortida html les imatges
+---
+
+**Autors**: Miquel Àngel Llauger, Melcion Ciudad i Albert Moya
+
+**Enllaç al repositori de Githhub**: [practica_5_ad](https://github.com/albertmoyanadal/practica_5_ad)
