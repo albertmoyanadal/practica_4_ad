@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-12-17">
 
-<title>Exercicis per exposar</title>
+<title>Anàlisi de Dades TIC a Europa - 2021</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -42,14 +41,35 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introducció" id="toc-introducció" class="nav-link active" data-scroll-target="#introducció">Introducció</a>
+  <ul class="collapse">
+  <li><a href="#objectiu" id="toc-objectiu" class="nav-link" data-scroll-target="#objectiu">Objectiu</a></li>
+  <li><a href="#dades" id="toc-dades" class="nav-link" data-scroll-target="#dades">Dades</a></li>
+  </ul></li>
+  <li><a href="#anàlisi-exploratori-de-dades-eda" id="toc-anàlisi-exploratori-de-dades-eda" class="nav-link" data-scroll-target="#anàlisi-exploratori-de-dades-eda">Anàlisi Exploratori de Dades (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#estadístiques-descriptives" id="toc-estadístiques-descriptives" class="nav-link" data-scroll-target="#estadístiques-descriptives">Estadístiques descriptives</a></li>
+  </ul></li>
+  <li><a href="#anàlisi-de-components-principals-pca" id="toc-anàlisi-de-components-principals-pca" class="nav-link" data-scroll-target="#anàlisi-de-components-principals-pca">Anàlisi de Components Principals (PCA)</a>
+  <ul class="collapse">
+  <li><a href="#elecció-de-la-matriu-de-covariància-o-correlació" id="toc-elecció-de-la-matriu-de-covariància-o-correlació" class="nav-link" data-scroll-target="#elecció-de-la-matriu-de-covariància-o-correlació">Elecció de la matriu de covariància o correlació</a></li>
+  <li><a href="#selecció-del-nombre-de-components-principals" id="toc-selecció-del-nombre-de-components-principals" class="nav-link" data-scroll-target="#selecció-del-nombre-de-components-principals">Selecció del nombre de components principals</a></li>
+  <li><a href="#interpretació-de-les-components-principals" id="toc-interpretació-de-les-components-principals" class="nav-link" data-scroll-target="#interpretació-de-les-components-principals">Interpretació de les components principals</a></li>
+  </ul></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul>
+</nav>
 </div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercicis per exposar</h1>
-<p class="subtitle lead">20582- Anàlisi de Dades del GMAT</p>
+<h1 class="title">Anàlisi de Dades TIC a Europa - 2021</h1>
+<p class="subtitle lead">Anàlisi de Dades</p>
 </div>
 
 
@@ -57,12 +77,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 17, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -73,7 +87,224 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><strong>Autors</strong>: Miquel Àngel Llauger, Melcion Ciudad i Albert Moya</p>
-<p><strong>Enllaç al repositori de Githhub</strong>: <a href="https://github.com/albertmoyanadal/practica_5_ad">practica_5_ad</a></p>
+<p><a href="https://github.com/albertmoyanadal/practica_5_ad"><strong>Repositori de la pràctica</strong></a></p>
+<hr>
+<section id="introducció" class="level2">
+<h2 class="anchored" data-anchor-id="introducció">Introducció</h2>
+<section id="objectiu" class="level3">
+<h3 class="anchored" data-anchor-id="objectiu">Objectiu</h3>
+<p>L’objectiu d’aquest treball és realitzar un <strong>anàlisi exploratori de les dades</strong> disponibles sobre l’ús de les Tecnologies de la Informació i la Comunicació (<strong>TIC</strong>) durant l’any 2021.</p>
+<p>L’anàlisi es centra en:</p>
+<ul>
+<li><p>Identificar patrons rellevants en l’ús de TIC per part de les <strong>empreses, les llars i els individus</strong>.</p></li>
+<li><p>Observar possibles relacions entre les variables disponibles, com ara la connexió a Internet, l’ús de xarxes socials o la realització de transaccions electròniques.</p></li>
+<li><p>Realitzar una <strong>reducció dimensional</strong> de les dades mitjançant una tècnica d’Anàlisi de Components Principals (<strong>PCA</strong>) per resumir la informació de manera més eficient i entendre millor els factors determinants.</p></li>
+</ul>
+</section>
+<section id="dades" class="level3">
+<h3 class="anchored" data-anchor-id="dades">Dades</h3>
+<p>Les dades utilitzades en aquest anàlisi procedeixen d’un conjunt estructurat amb les següents <strong>7 variables</strong>:</p>
+<ol type="1">
+<li><code>ebroad</code>: Percentatge d’empreses amb accés a Internet de banda ampla.<br>
+</li>
+<li><code>esales</code>: Percentatge d’empreses que realitzen vendes electròniques.<br>
+</li>
+<li><code>esocmedia</code>: Percentatge d’empreses que utilitzen xarxes socials.<br>
+</li>
+<li><code>eweb</code>: Percentatge d’empreses amb lloc web.<br>
+</li>
+<li><code>hbroad</code>: Percentatge de llars amb accés a Internet de banda ampla.<br>
+</li>
+<li><code>hiacc</code>: Percentatge de llars amb accés general a Internet.<br>
+</li>
+<li><code>iuse</code>: Percentatge d’individus que utilitzen Internet.</li>
+</ol>
+<p>A més, es crearà una <strong>nova variable categòrica</strong> anomenada <code>region</code>, que classificarà els països europeus en funció de la seva ubicació geogràfica:</p>
+<ul>
+<li><strong>Europa Occidental</strong>: BE, FR, DE, AT, NL, LU, IE.<br>
+</li>
+<li><strong>Europa del Sud</strong>: ES, IT, PT, EL, CY, MT.<br>
+</li>
+<li><strong>Europa de l’Est</strong>: CZ, BG, HU, PL, RO, SK.<br>
+</li>
+<li><strong>Països Nòrdics</strong>: DK, SE, FI, NO.<br>
+</li>
+<li><strong>Països Bàltics</strong>: EE, LV, LT.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="anàlisi-exploratori-de-dades-eda" class="level2">
+<h2 class="anchored" data-anchor-id="anàlisi-exploratori-de-dades-eda">Anàlisi Exploratori de Dades (EDA)</h2>
+<section id="estadístiques-descriptives" class="level3">
+<h3 class="anchored" data-anchor-id="estadístiques-descriptives">Estadístiques descriptives</h3>
+<p>Per començar, si haguessim tingut suficients observacions hauriem fet una matriu de dispersió, separant per regions per poder veure la influència de cada una d’elles. Com no és el cas, i per veure les correlacions entre variables numèriques emprarem un mapa de calor:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practica_5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretació:</strong> Com podem veure a la matriu, tenim algunes dades amb un alt nivell de correlació:</p>
+<ul>
+<li><p><code>hiacc</code> i <code>hbroad</code>: percentatge de llars amb accés a internet d’amplada de banda i el percentatge independentment de la seva connexió.</p></li>
+<li><p><code>hiacc</code> i <code>iuse</code>: percentatge de llars amb accés a internet i percentatge d’individuus que l’utilitzen.</p></li>
+</ul>
+<p>Per l’altra banda també tenim variables que practicament són independents com és el cas de:</p>
+<ul>
+<li><code>hiacc</code> i <code>esales</code>: percentatge de llars amb accés a internet i percentatge d’empreses que realitzen ventes electròniques.</li>
+</ul>
+<p>Com hem dit abans, no podem crear una matriu de dispersió de les dades respecte a la regió, és per això que ensanyarem una sèrie de gràfics separant per regions. Per triar aquests gràfics, ho farem utilitzant variables poc correlacionades entre elles per obtenir la màxima informació possible. Si feim dos gràfics de variables que estan molt correlacionades, segurament siguin molt parescuts.</p>
+<section id="gràfic-de-eweb-segons-la-regió" class="level4">
+<h4 class="anchored" data-anchor-id="gràfic-de-eweb-segons-la-regió">Gràfic de <code>eweb</code> segons la regió</h4>
+<p>Hem escollit aquesta variable perquè té molt bona correlació amb la resta de les variables, així que podem dir que les <em>resumeix.</em> En especial té un molt bon comportament amb les variables que descriuen a les empreses, per tant, és un bon candidat.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practica_5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gràfic-de-hiacc-segons-la-regió" class="level4">
+<h4 class="anchored" data-anchor-id="gràfic-de-hiacc-segons-la-regió">Gràfic de <code>hiacc</code> segons la regió</h4>
+<p>Aquesta variable també és molt interessant com a representant de les variables de les llars a causa de la seva gran correlació, com hem vist abans. Així ens podem fer una idea de com és la connexió a internet en les diferents regions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practica_5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="anàlisi-de-components-principals-pca" class="level2">
+<h2 class="anchored" data-anchor-id="anàlisi-de-components-principals-pca">Anàlisi de Components Principals (PCA)</h2>
+<section id="elecció-de-la-matriu-de-covariància-o-correlació" class="level3">
+<h3 class="anchored" data-anchor-id="elecció-de-la-matriu-de-covariància-o-correlació">Elecció de la matriu de covariància o correlació</h3>
+<p>En aquest cas és indiferent elegir la matriu de covariàncies o de correlació. Això passa perquè tenim totes les unitats en percentatges, per tant, estan a la mateixa escala. Si no fos el cas, hauriem d’elegir la matriu de correlació ja que estandaritza les variables.</p>
+</section>
+<section id="selecció-del-nombre-de-components-principals" class="level3">
+<h3 class="anchored" data-anchor-id="selecció-del-nombre-de-components-principals">Selecció del nombre de components principals</h3>
+<p>Ara bé, tenim dues maneres per calcular les components principals necessàries: utilitzant els valors propis i mitjançant el seu diagrama.</p>
+<section id="valors-propis" class="level4">
+<h4 class="anchored" data-anchor-id="valors-propis">Valors propis</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Valors propis</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">eigenvalue</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">variance.percent</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">cumulative.variance.percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Dim.1</td>
+<td style="text-align: center;">4.6438922</td>
+<td style="text-align: center;">66.3413175</td>
+<td style="text-align: center;">66.34132</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dim.2</td>
+<td style="text-align: center;">1.1011602</td>
+<td style="text-align: center;">15.7308594</td>
+<td style="text-align: center;">82.07218</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dim.3</td>
+<td style="text-align: center;">0.5469471</td>
+<td style="text-align: center;">7.8135301</td>
+<td style="text-align: center;">89.88571</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dim.4</td>
+<td style="text-align: center;">0.3275596</td>
+<td style="text-align: center;">4.6794228</td>
+<td style="text-align: center;">94.56513</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dim.5</td>
+<td style="text-align: center;">0.1911396</td>
+<td style="text-align: center;">2.7305663</td>
+<td style="text-align: center;">97.29570</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dim.6</td>
+<td style="text-align: center;">0.1237450</td>
+<td style="text-align: center;">1.7677862</td>
+<td style="text-align: center;">99.06348</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dim.7</td>
+<td style="text-align: center;">0.0655562</td>
+<td style="text-align: center;">0.9365176</td>
+<td style="text-align: center;">100.00000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+</section>
+<section id="diagrama-de-valors-propis" class="level4">
+<h4 class="anchored" data-anchor-id="diagrama-de-valors-propis">Diagrama de valors propis</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practica_5_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>De les dues formes arribam allà mateix. Aproximadament, amb dues component expliquem el 80% de la variació total, mentre que amb tres components principals n’explicariem un 90%. Com que a les dades es separen clarament dos casos, les empreses i les llars podria ser viable considerar només dues components principals.</p>
+<p>El <strong>criteri</strong> per calcular el nombre de components principals el que farem serà tallar just abans del valor propi menor que 1. En aquest cas ens quedarem amb dues dimensions.</p>
+</section>
+</section>
+<section id="interpretació-de-les-components-principals" class="level3">
+<h3 class="anchored" data-anchor-id="interpretació-de-les-components-principals">Interpretació de les components principals</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practica_5_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>D’aquest gràfic podem treure molta informació. Vegem que les variables que descriuen a les empreses estan separades de les variables de les llars. Per tant podem interpretar el següent:</p>
+<ul>
+<li><p><strong>Esquerra - Superior:</strong> els llocs on les empreses tenen més accés a l’internet també estan involucrades en les activitats digitals com podrien ser les xarxes socials o les tendes electròniques.</p></li>
+<li><p><strong>Esquerra - Inferior:</strong> aquesta interpretació és més senzilla, resulta que els individus que utilitzen internet, la majoria també tenen internet a casa. Que si ho pensam té tot el sentit del mon.</p></li>
+<li><p><strong>Posicionament a l’Esquerra:</strong> totes les variables miren a l’esquerra. Això ens podria dir que el fet de tenir internet no és exclusiu de les empreses o de les llars, si no que tenim una certa correspondència. És a dir, allà on hi hagi un fàcil accés a internet, tant les empreses com les llars, gaudiran d’ell.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<ul>
+<li><p>A l’anàlisi exploratori hem vist que la majoria de variables estaven correlacionades. En especial, les variables de les empreses estaven correlacionades entre elles i les de les llars i els individuus també.</p></li>
+<li><p>Fent el PCA hem considerat òptim fer una reducció fins quedar-nos amb dues components.</p></li>
+<li><p>Les dues components que hem trobat podrien significar: tenir internet i on tens internet, a casa o a l’empresa.</p></li>
+</ul>
+</section>
 
 </main>
 <!-- /main column -->

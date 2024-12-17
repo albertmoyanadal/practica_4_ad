@@ -1,0 +1,82 @@
+
+
+
+
+## Anàlisi de Components Principals (PCA)
+
+**Objectiu**: Reduir la dimensió de les dades i identificar patrons subjacents.
+
+### Elecció de la matriu de covariància o correlació
+
+- **Justificació**: Explicar si s'utilitza la matriu de **correlacions** (perquè les variables estan en diferents escales) o la matriu de **covariàncies**.
+
+**Codi exemple de PCA amb matriu de correlació:**
+
+```{r}
+# Realitzar PCA
+pca_result <- PCA(datos %>% select(ebroad, esales, esocmedia, eweb, hbroad, hiacc, iuse),
+                  scale.unit = TRUE, graph = FALSE)
+
+# Visualitzar variància explicada
+fviz_eig(pca_result)
+```
+
+### 3.2 Selecció del nombre de components
+
+- Explicar quin criteri s'utilitza per seleccionar els components principals:  
+  - **Criteri del tall de l'eigenvalor > 1** (Kaiser).  
+  - **Scree plot** (visualització de l'eigenvalor).  
+  - Variància acumulada (per exemple, retenir components que expliquin el 70-80% de la variància).  
+
+###  Interpretació dels components principals
+
+- Mostrar les càrregues de les variables en els components seleccionats.  
+- Interpretar què representen aquests components en el context de les dades.
+
+**Codi per visualitzar les càrregues:**
+
+```{r}
+fviz_pca_var(pca_result, col.var = "contrib", gradient.cols = c("lightblue", "blue"))
+```
+
+---
+
+## Conclusions
+
+- Resumir els resultats més importants de l'anàlisi exploratori (correlacions i visualitzacions).  
+- Explicar la reducció de dimensió obtinguda amb PCA i la interpretació dels components.  
+- Relacionar les troballes amb el context de l'ús de les TIC a Europa i destacar les diferències regionals.  
+
+---
+
+## Referències
+Incloure enllaços a les fonts de dades i bibliografia utilitzada.
+
+---
+
+## **Estil i Format**  
+- Utilitza un tema minimalista com `theme_minimal()` a `ggplot`.  
+- Divideix el codi i els resultats amb blocs clars en **RMarkdown** (```{r} ... ```).  
+- Organitza les seccions amb encapçalaments (`##`, `###`).  
+- Inclou comentaris al codi per explicar què fa cada pas.  
+
+---
+
+Amb aquesta estructura, el document serà **clar**, **elegant** i **precís**, permetent una interpretació fàcil i rigorosa dels resultats obtinguts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
