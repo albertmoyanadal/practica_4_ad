@@ -206,7 +206,7 @@ El **criteri** per calcular el nombre de components principals el que farem ser�
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 # Visualitzar les càrregues de les variables en els components seleccionats
-fviz_pca_var(data_pca, col.var = "contrib", gradient.cols = c("lightblue", "blue"))
+fviz_pca_var(data_pca, col.var = "contrib", gradient.cols = c("blue","#FC4E07"))
 
 ```
 
@@ -217,6 +217,23 @@ D'aquest gràfic podem treure molta informació. Vegem que les variables que des
 - **Esquerra - Inferior:** aquesta interpretació és més senzilla, resulta que els individus que utilitzen internet, la majoria també tenen internet a casa. Que si ho pensam té tot el sentit del mon.
 
 - **Posicionament a l'Esquerra:** totes les variables miren a l'esquerra. Això ens podria dir que el fet de tenir internet no és exclusiu de les empreses o de les llars, si no que tenim una certa correspondència. És a dir, allà on hi hagi un fàcil accés a internet, tant les empreses com les llars, gaudiran d'ell.
+
+Podem observar la qualitat de la representació de les variables quan les reduïm a 2 dimensions:
+
+```{r}
+var <- get_pca_var(data_pca)
+fviz_cos2(data_pca, choice = "var", axes = 1:2)
+
+```
+Obervam que alguna variable no acaba de quedar massa ben representada. Per això afegirem el cas en que reduïm la dimensió a **3**. 
+
+```{r}
+var <- get_pca_var(data_pca)
+fviz_cos2(data_pca, choice = "var", axes = 1:3)
+
+```
+Podem observar que amb tres dimensions no queda cap variable davall del 0.75, però 
+usant una dimensió més tampoc no guanyam molt. 
 
 ---
 
