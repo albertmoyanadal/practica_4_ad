@@ -1,0 +1,173 @@
+---
+title: "Anàlisi de Dades TIC a Europa - 2021"
+format: revealjs
+---
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Carregar llibreries necessàries per les diapositives
+library(tidyverse)
+library(corrr)
+library(FactoMineR)
+library(factoextra)
+library(GGally)
+library(ggcorrplot)
+library(knitr)
+library(dplyr)
+```
+
+### Autors
+
+- Miquel Àngel Llauger
+- Melcion Ciudad
+- Albert Moya
+
+[**Repositori de la pràctica**](https://github.com/albertmoyanadal/practica_5_ad)
+
+
+# Introducció
+
+## Objectiu
+
+- Realitzar un **anàlisi exploratori** sobre l'ús de les TIC l'any 2021.
+- Identificar patrons i relacions entre variables.
+- Aplicar una **reducció dimensional** amb PCA.
+
+## Dades
+
+Variables utilitzades:
+
+1. `ebroad`: Percentatge d'empreses amb banda ampla.
+2. `esales`: Empreses amb vendes electròniques.
+3. `esocmedia`: Empreses que usen xarxes socials.
+4. `eweb`: Empreses amb lloc web.
+5. `hbroad`: Llars amb banda ampla.
+6. `hiacc`: Llars amb accés a Internet.
+7. `iuse`: Individus que usen Internet.
+
+---
+
+Nova variable:
+
+- `region`: Classificació geogràfica de països.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Carregar dades
+data <- read.csv("data/problema1_ACP.csv")
+
+# Renombrar la variable X a pais
+data <- data %>%
+  rename(country = X)
+
+# Crear variable region
+data <- data %>%
+  mutate(region = case_when(
+    country %in% c("BE", "FR", "DE", "AT", "NL", "LU", "IE") ~ "Europa Occidental",
+    country %in% c("ES", "IT", "PT", "EL", "CY", "MT") ~ "Europa del Sud",
+    country %in% c("CZ", "BG", "HU", "PL", "RO", "SK") ~ "Europa de l'Est",
+    country %in% c("DK", "SE", "FI", "NO") ~ "Països Nòrdics",
+    country %in% c("EE", "LV", "LT") ~ "Països Bàltics",
+    TRUE ~ "Altres"
+  )) %>%
+  select(country, region, everything()) # Reorganitzar columnes
+
+```
+
+
+# Anàlisi Exploratori de Dades (EDA)
+
+## Mapa de correlacions
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+cor_matrix <- data %>%
+  select(ebroad, esales, esocmedia, eweb, hbroad, hiacc, iuse) %>%
+  cor()
+
+ggcorrplot(cor_matrix, hc.order = TRUE,
+             type = "lower",
+             lab = TRUE)
+```
+
+## Gràfics per regions
+
+### Percentatge d'empreses amb lloc web per regió
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data, aes(x = region, y = eweb, fill = region)) +
+  geom_boxplot() +
+  labs(title = "Percentatge d'empreses amb lloc web",
+       x = "Regió", y = "Percentatge") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+---
+
+#### Percentatge de llars amb accés a Internet per regió
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+ggplot(data, aes(x = region, y = hiacc, fill = region)) +
+  geom_boxplot() +
+  labs(title = "Percentatge de llars amb accés a Internet",
+       x = "Regió", y = "Percentatge") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+# Anàlisi de Components Principals (PCA)
+
+## Elecció de la matriu
+
+Matriu de **correlació** per estandarditzar les variables.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+data_pca <- prcomp(data[, 3:9], scale = TRUE)
+# kable(cor_matrix, caption = "Matriu de Correlació")
+```
+
+## Selecció del nombre de components
+
+
+### Diagrama de valors propis
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+fviz_eig(data_pca, addlabels = TRUE, ylim = c(0, 100))
+```
+
+---
+
+### Interpretació de les components
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+fviz_pca_var(data_pca, col.var = "contrib", gradient.cols = c("blue", "#FC4E07"))
+```
+
+---
+### Qualitat de la representació
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+var <- get_pca_var(data_pca)
+fviz_cos2(data_pca, choice = "var", axes = 1:2)
+
+```
+
+
+# Conclusions
+
+1. Variables d'empreses i llars molt correlacionades.
+2. Reducció a **dues components** per representar el 80% de la variació.
+3. Components interpreten: **accés a Internet** i **tipus d'usuari (empresa o llar)**.
+
+
+
+
+
+
+
